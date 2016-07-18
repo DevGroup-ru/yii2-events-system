@@ -1,0 +1,30 @@
+{
+    "name": "devgroup/yii2-events-system",
+    "description": "The easy and flexible system of events attaching via admin panel",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","event"],
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Pavel Fedotov",
+            "email": "fps.06@mail.ru"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "require-dev": {
+        "yiisoft/yii2-codeception": "~2.0.0",
+        "codeception/codeception": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "DevGroup\\EventsSystem\\": "src/"
+        }
+    },
+    "extra": {
+        "bootstrap": "DevGroup\\EventsSystem\\Bootstrap"
+    }
+}
