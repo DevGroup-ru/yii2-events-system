@@ -2,8 +2,13 @@
 
 namespace DevGroup\EventsSystem;
 
-use Yii;
+use DevGroup\EventsSystem\helpers\EventHelper;
+use yii\base\Event;
 
+/**
+ * Class Bootstrap
+ * @package DevGroup\EventsSystem
+ */
 class Bootstrap implements \yii\base\BootstrapInterface
 {
     /**
@@ -12,6 +17,13 @@ class Bootstrap implements \yii\base\BootstrapInterface
      */
     public function bootstrap($app)
     {
-        // There is a magic here
+        \Yii::$app->i18n->translations['events-system'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'sourceLanguage' => 'en-US',
+            'basePath' => '@DevGroup/EventsSystem/messages',
+        ];
+        foreach (EventHelper::getActiveHandlersList() as $handler) {
+            Event::on($handler['class'], $handler['name'], $handler['callable'], $handler['data']);
+        }
     }
 }
