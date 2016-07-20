@@ -9,6 +9,7 @@ use yii\widgets\ActiveForm;
  * @var yii\web\View $this
  */
 
+\DevGroup\EventsSystem\assets\EventFormAsset::register($this);
 $this->title = EventHelper::t($model->isNewRecord ? 'Create' : 'Update');
 $this->params['breadcrumbs'][] = ['label' => EventHelper::t('Event handlers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,12 +19,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="event-event-handler-form">
         <?php $form = ActiveForm::begin(); ?>
-        <?= $form->field($model, 'event_id')->dropDownList(\DevGroup\EventsSystem\models\Event::dropDownList()) ?>
-        <?= $form->field($model, 'event_handler_id')->dropDownList(\DevGroup\EventsSystem\models\EventHandler::dropDownList()) ?>
-        <?= $form->field($model, 'method')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'params')->textarea(['rows' => 6]) ?>
-        <?= $form->field($model, 'is_active')->checkbox() ?>
-        <?= $form->field($model, 'sort_order')->textInput() ?>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <?= $form->field($model, 'event_id')->dropDownList(\DevGroup\EventsSystem\models\Event::dropDownList()) ?>
+                <?= $form->field($model, 'event_handler_id')->dropDownList([]) ?>
+                <?= $form->field($model, 'method')->dropDownList([]) ?>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <?= $form->field($model, 'params')->textarea(['rows' => 3]) ?>
+                <?= $form->field($model, 'is_active')->checkbox() ?>
+                <?= $form->field($model, 'sort_order')->textInput() ?>
+            </div>
+        </div>
         <div class="form-group">
             <?= Html::submitButton($this->title, ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
