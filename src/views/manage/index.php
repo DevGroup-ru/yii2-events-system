@@ -1,5 +1,6 @@
 <?php
 
+use DevGroup\EventsSystem\helpers\EventHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -10,14 +11,14 @@ use yii\widgets\Pjax;
  * @var yii\web\View $this
  */
 
-$this->title = Yii::t('app', 'Event handlers');
+$this->title = EventHelper::t('Event handlers');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="event-event-handler-index">
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
-        <?= Html::a(Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(EventHelper::t('Create'), ['update'], ['class' => 'btn btn-success']) ?>
     </p>
     <?php Pjax::begin(); ?>
         <?=
@@ -42,12 +43,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'method',
                     [
+                        'class' => 'DevGroup\EventsSystem\widgets\StatusColumn',
                         'attribute' => 'is_active',
-                        'filter' => [0 => Yii::t('app', 'No'), 1 => Yii::t('app', 'Yes')],
                     ],
                     [
                         'attribute' => 'is_system',
-                        'filter' => [0 => Yii::t('app', 'No'), 1 => Yii::t('app', 'Yes')],
+                        'class' => 'DevGroup\EventsSystem\widgets\StatusColumn',
                     ],
                     [
                         'attribute' => 'sort_order',

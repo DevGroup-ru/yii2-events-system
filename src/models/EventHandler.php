@@ -2,6 +2,7 @@
 
 namespace DevGroup\EventsSystem\models;
 
+use DevGroup\EventsSystem\helpers\EventHelper;
 use DevGroup\EventsSystem\traits\ListData;
 use Yii;
 
@@ -44,10 +45,10 @@ class EventHandler extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
-            'class_name' => Yii::t('app', 'Class name'),
+            'id' => EventHelper::t('ID'),
+            'name' => EventHelper::t('Name'),
+            'description' => EventHelper::t('Description'),
+            'class_name' => EventHelper::t('Class name'),
         ];
     }
 }

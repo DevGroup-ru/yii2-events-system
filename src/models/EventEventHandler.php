@@ -2,6 +2,7 @@
 
 namespace DevGroup\EventsSystem\models;
 
+use DevGroup\EventsSystem\helpers\EventHelper;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -47,13 +48,14 @@ class EventEventHandler extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'event_id' => Yii::t('app', 'Event'),
-            'event_handler_id' => Yii::t('app', 'Event handler'),
-            'method' => Yii::t('app', 'Method'),
-            'params' => Yii::t('app', 'Params'),
-            'is_active' => Yii::t('app', 'Active'),
-            'sort_order' => Yii::t('app', 'Sort order'),
+            'id' => EventHelper::t('ID'),
+            'event_id' => EventHelper::t('Event'),
+            'event_handler_id' => EventHelper::t('Event handler'),
+            'method' => EventHelper::t('Method'),
+            'params' => EventHelper::t('Params'),
+            'is_active' => EventHelper::t('Active'),
+            'is_system' => EventHelper::t('System'),
+            'sort_order' => EventHelper::t('Sort order'),
         ];
     }
 
@@ -72,6 +74,22 @@ class EventEventHandler extends \yii\db\ActiveRecord
         return new ActiveDataProvider(
             [
                 'query' => $query,
+                'sort' => [
+                    'attributes' => [
+                        'event_id' => [
+                            'asc' => ['event_id' => SORT_ASC, 'sort_order' => SORT_ASC],
+                            'desc' => ['event_id' => SORT_DESC, 'sort_order' => SORT_ASC],
+                        ],
+                        'event_handler_id',
+                        'method',
+                        'is_active',
+                        'is_system',
+                        'sort_order',
+                    ],
+                    'defaultOrder' => [
+                        'event_id' => SORT_ASC,
+                    ],
+                ],
             ]
         );
     }

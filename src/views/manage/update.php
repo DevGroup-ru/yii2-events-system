@@ -1,5 +1,6 @@
 <?php
 
+use DevGroup\EventsSystem\helpers\EventHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -8,8 +9,8 @@ use yii\widgets\ActiveForm;
  * @var yii\web\View $this
  */
 
-$this->title = Yii::t('app', Yii::t('app', $model->isNewRecord ? 'Create' : 'Update'));
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Event handlers'), 'url' => ['index']];
+$this->title = EventHelper::t($model->isNewRecord ? 'Create' : 'Update');
+$this->params['breadcrumbs'][] = ['label' => EventHelper::t('Event handlers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
