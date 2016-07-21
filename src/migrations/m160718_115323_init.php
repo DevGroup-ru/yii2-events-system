@@ -55,7 +55,7 @@ class m160718_115323_init extends Migration
                 'event_id' => $this->integer()->notNull(),
                 'event_handler_id' => $this->integer()->notNull(),
                 'method' => $this->string(255)->notNull(),
-                'params' => $this->text()->null(),
+                'packed_json_params' => $this->text()->null(),
                 'is_active' => $this->boolean()->defaultValue(true),
                 'is_system' => $this->boolean()->defaultValue(false),
                 'sort_order' => $this->integer()->notNull()->defaultValue(0),
@@ -158,7 +158,7 @@ class m160718_115323_init extends Migration
                 'event_id' => 12,
                 'event_handler_id' => $this->db->lastInsertID,
                 'method' => 'updateTitle',
-                'params' => '{}',
+                'packed_json_params' => '{}',
             ]
         );
     }

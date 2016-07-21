@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'method')->dropDownList([]) ?>
             </div>
             <div class="col-xs-12 col-md-6">
-                <?= $form->field($model, 'params')->textarea(['rows' => 3]) ?>
+                <?= $form->field($model, 'params')->widget('devgroup\jsoneditor\Jsoneditor') ?>
                 <?= $form->field($model, 'is_active')->checkbox() ?>
                 <?= $form->field($model, 'sort_order')->textInput() ?>
             </div>

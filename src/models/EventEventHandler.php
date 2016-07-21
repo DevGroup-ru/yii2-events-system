@@ -20,6 +20,15 @@ use yii\data\ActiveDataProvider;
  */
 class EventEventHandler extends \yii\db\ActiveRecord
 {
+    public function behaviors()
+    {
+        return [
+            'packedJsonAttributes' => [
+                'class' => 'DevGroup\DataStructure\behaviors\PackedJsonAttributes',
+            ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
