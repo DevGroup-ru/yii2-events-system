@@ -5,6 +5,7 @@ namespace DevGroup\EventsSystem\models;
 use DevGroup\EventsSystem\helpers\EventHelper;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yiister\mappable\ActiveRecordTrait;
 
 /**
  * This is the model class for table "{{%devgroup_event_event_handler}}".
@@ -20,6 +21,8 @@ use yii\data\ActiveDataProvider;
  */
 class EventEventHandler extends \yii\db\ActiveRecord
 {
+    use ActiveRecordTrait;
+
     public function behaviors()
     {
         return [

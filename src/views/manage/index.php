@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id',
                     [
                         'attribute' => 'event_id',
-                        'filter' => \DevGroup\EventsSystem\models\Event::dropDownList(),
+                        'filter' => \DevGroup\EventsSystem\models\Event::dropDownListWithGroup(),
                         'value' => function ($model, $key, $index, $column) {
                             return $model->eventName;
                         }

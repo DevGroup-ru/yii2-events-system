@@ -5,6 +5,7 @@ namespace DevGroup\EventsSystem\models;
 use DevGroup\EventsSystem\helpers\EventHelper;
 use DevGroup\EventsSystem\traits\ListData;
 use Yii;
+use yiister\mappable\ActiveRecordTrait;
 
 /**
  * This is the model class for table "{{%devgroup_event}}".
@@ -18,6 +19,7 @@ use Yii;
  */
 class Event extends \yii\db\ActiveRecord
 {
+    use ActiveRecordTrait;
     use ListData;
 
     /**
@@ -55,5 +57,13 @@ class Event extends \yii\db\ActiveRecord
             'event_class_name' => EventHelper::t('Event class name'),
             'execution_point' => EventHelper::t('Execution point'),
         ];
+    }
+
+    public static function dropDownListWithGroup()
+    {
+        EventGroup::preloadData();
+        return static::dropDownList(function ($model, $default) {
+            return $model['name'] . ' (' . EventGroup::getNameById($model['event_group_id']) . ')';
+        });
     }
 }

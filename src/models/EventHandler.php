@@ -5,6 +5,7 @@ namespace DevGroup\EventsSystem\models;
 use DevGroup\EventsSystem\helpers\EventHelper;
 use DevGroup\EventsSystem\traits\ListData;
 use Yii;
+use yiister\mappable\ActiveRecordTrait;
 
 /**
  * This is the model class for table "{{%devgroup_event_handler}}".
@@ -16,6 +17,7 @@ use Yii;
  */
 class EventHandler extends \yii\db\ActiveRecord
 {
+    use ActiveRecordTrait;
     use ListData;
 
     /**

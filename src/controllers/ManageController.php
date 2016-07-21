@@ -47,7 +47,7 @@ class ManageController extends Controller
      */
     public function findModel($id)
     {
-        if (($model = EventEventHandler::findOne($id)) !== null) {
+        if (($model = EventEventHandler::getById($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
