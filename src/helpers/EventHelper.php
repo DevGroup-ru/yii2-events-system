@@ -6,6 +6,9 @@ use DevGroup\EventsSystem\models\Event;
 use DevGroup\EventsSystem\models\EventEventHandler;
 use DevGroup\EventsSystem\models\EventGroup;
 use DevGroup\EventsSystem\models\EventHandler;
+use DevGroup\TagDependencyHelper\NamingHelper;
+use Yii;
+use yii\caching\TagDependency;
 
 /**
  * Class EventHelper
@@ -19,48 +22,63 @@ class EventHelper
      */
     public static function getActiveHandlersList()
     {
-        // @todo Refactor it
-        // @todo Cache it
-        // @todo Map it
-        $eventEventHandlers = EventEventHandler::find()
-            ->where(['is_active' => 1])
-            ->orderBy(['sort_order' => SORT_ASC])
-            ->asArray(true)
-            ->all();
-        $events = Event::find()
-            ->where(['id' => array_column($eventEventHandlers, 'event_id', 'event_id')])
-            ->indexBy('id')
-            ->asArray(true)
-            ->all();
-        $eventGroups = EventGroup::find()
-            ->where(['id' => array_column($events, 'event_group_id', 'event_group_id')])
-            ->indexBy('id')
-            ->asArray(true)
-            ->all();
-        $eventHandlers = EventHandler::find()
-            ->where(['id' => array_column($eventEventHandlers, 'event_handler_id', 'event_handler_id')])
-            ->indexBy('id')
-            ->asArray(true)
-            ->all();
-        $handlers = [];
-        foreach ($eventEventHandlers as $eventEventHandler) {
-            if (isset(
-                $eventHandlers[$eventEventHandler['event_handler_id']],
-                $events[$eventEventHandler['event_id']],
-                $eventGroups[$events[$eventEventHandler['event_id']]['event_group_id']]
-                ) === false
-            ) {
-                continue;
+        $cacheKey = 'DevGroup/EventsSystem:activeHandlersList';
+        $handlers = Yii::$app->cache->get($cacheKey);
+        if ($handlers === false) {
+            $eventEventHandlers = EventEventHandler::find()
+                ->where(['is_active' => 1])
+                ->orderBy(['sort_order' => SORT_ASC])
+                ->all();
+            $events = Event::find()
+                ->where(['id' => array_column($eventEventHandlers, 'event_id', 'event_id')])
+                ->indexBy('id')
+                ->asArray(true)
+                ->all();
+            $eventGroups = EventGroup::find()
+                ->where(['id' => array_column($events, 'event_group_id', 'event_group_id')])
+                ->indexBy('id')
+                ->asArray(true)
+                ->all();
+            $eventHandlers = EventHandler::find()
+                ->where(['id' => array_column($eventEventHandlers, 'event_handler_id', 'event_handler_id')])
+                ->indexBy('id')
+                ->asArray(true)
+                ->all();
+            $handlers = [];
+            foreach ($eventEventHandlers as $eventEventHandler) {
+                if (isset(
+                        $eventHandlers[$eventEventHandler->event_handler_id],
+                        $events[$eventEventHandler->event_id],
+                        $eventGroups[$events[$eventEventHandler->event_id]['event_group_id']]
+                    ) === false
+                ) {
+                    continue;
+                }
+                $handlers[] = [
+                    'class' => $eventGroups[$events[$eventEventHandler->event_id]['event_group_id']]['owner_class_name'],
+                    'name' => $events[$eventEventHandler->event_id]['execution_point'],
+                    'callable' => [
+                        $eventHandlers[$eventEventHandler->event_handler_id]['class_name'],
+                        $eventEventHandler->method,
+                    ],
+                    'data' => $eventEventHandler->params,
+                ];
             }
-            $handlers[] = [
-                'class' => $eventGroups[$events[$eventEventHandler['event_id']]['event_group_id']]['owner_class_name'],
-                'name' => $events[$eventEventHandler['event_id']]['execution_point'],
-                'callable' => [
-                    $eventHandlers[$eventEventHandler['event_handler_id']]['class_name'],
-                    $eventEventHandler['method'],
-                ],
-                'data' => [], // @todo Set handler params
-            ];
+            Yii::$app->cache->set(
+                $cacheKey,
+                $handlers,
+                86400,
+                new TagDependency(
+                    [
+                        'tags' => [
+                            NamingHelper::getCommonTag(EventGroup::className()),
+                            NamingHelper::getCommonTag(Event::className()),
+                            NamingHelper::getCommonTag(EventHandler::className()),
+                            NamingHelper::getCommonTag(EventEventHandler::className()),
+                        ],
+                    ]
+                )
+            );
         }
         return $handlers;
     }
@@ -91,6 +109,6 @@ class EventHelper
      */
     public static function t($message, $params = [], $language = null)
     {
-        return \Yii::t('events-system', $message, $params, $language);
+        return Yii::t('events-system', $message, $params, $language);
     }
 }

@@ -15,7 +15,8 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0.0",
         "yiister/yii2-mappable-ar": "~1.0",
-        "devgroup/yii2-data-structure-tools": "*"
+        "devgroup/yii2-data-structure-tools": "*",
+        "devgroup/yii2-tag-dependency-helper": "~1.4"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "~2.0.0",

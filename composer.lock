@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aab8c22351cc85a89aae287438f54177",
-    "content-hash": "e0cec441be3e9d5b069c59f31794535d",
+    "hash": "2e9685e11bde5462d4964d33a453ec54",
+    "content-hash": "5e8754c9e2db436c7208d02e33648220",
     "packages": [
         {
             "name": "arogachev/yii2-sortable",
