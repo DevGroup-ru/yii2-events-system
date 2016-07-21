@@ -37,7 +37,7 @@ class Event extends \yii\db\ActiveRecord
     {
         return [
             [['event_group_id', 'name', 'execution_point'], 'required'],
-            [['event_group_id'], 'integer'],
+            [['event_group_id'], 'exist', 'targetClass' => EventGroup::className(), 'targetAttribute' => 'id'],
             [['description'], 'string'],
             [['name'], 'string', 'max' => 100],
             [['event_class_name', 'execution_point'], 'string', 'max' => 255],

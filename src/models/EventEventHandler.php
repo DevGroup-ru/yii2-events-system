@@ -3,7 +3,6 @@
 namespace DevGroup\EventsSystem\models;
 
 use DevGroup\EventsSystem\helpers\EventHelper;
-use Yii;
 use yii\data\ActiveDataProvider;
 use yiister\mappable\ActiveRecordTrait;
 
@@ -47,8 +46,11 @@ class EventEventHandler extends \yii\db\ActiveRecord
     {
         return [
             [['event_id', 'event_handler_id', 'method'], 'required'],
-            [['event_id', 'event_handler_id', 'is_active', 'sort_order'], 'integer'],
+            [['event_id'], 'exist', 'targetClass' => Event::className(), 'targetAttribute' => 'id'],
+            [['event_handler_id'], 'exist', 'targetClass' => EventHandler::className(), 'targetAttribute' => 'id'],
+            [['sort_order'], 'integer'],
             [['params'], 'string'],
+            [['is_active'], 'boolean'],
             [['is_system'], 'boolean', 'on' => 'search'],
             [['method'], 'string', 'max' => 255],
         ];
