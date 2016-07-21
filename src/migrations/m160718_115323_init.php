@@ -12,7 +12,6 @@ class m160718_115323_init extends Migration
 {
     public function up()
     {
-        // @todo add indexes
         $tableOptions = $this->db->driverName === 'mysql'
             ? 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB'
             : null;
@@ -38,6 +37,15 @@ class m160718_115323_init extends Migration
             ],
             $tableOptions
         );
+        $this->addForeignKey(
+            'fk-event-event_group_id-event_group-id',
+            Event::tableName(),
+            'event_group_id',
+            EventGroup::tableName(),
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
         $this->createTable(
             EventHandler::tableName(),
             [
@@ -61,6 +69,24 @@ class m160718_115323_init extends Migration
                 'sort_order' => $this->integer()->notNull()->defaultValue(0),
             ],
             $tableOptions
+        );
+        $this->addForeignKey(
+            'fk-event_event_handler-event_id-event-id',
+            EventEventHandler::tableName(),
+            'event_id',
+            Event::tableName(),
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+        $this->addForeignKey(
+            'fk-event_event_handler-event_handler_id-event_handler-id',
+            EventEventHandler::tableName(),
+            'event_handler_id',
+            EventHandler::tableName(),
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
         // data
         // Web application
