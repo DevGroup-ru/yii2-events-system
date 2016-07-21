@@ -88,6 +88,21 @@ class m160718_115323_init extends Migration
             'CASCADE',
             'CASCADE'
         );
+        $this->createIndex(
+            'ix-event_event_handler-active_sort_order',
+            EventEventHandler::tableName(),
+            ['is_active', 'sort_order']
+        );
+        $this->createIndex(
+            'ix-event_event_handler-event_id-sort_order',
+            EventEventHandler::tableName(),
+            ['event_id', 'sort_order']
+        );
+        $this->createIndex(
+            'ix-event_event_handler-event_handler_id',
+            EventEventHandler::tableName(),
+            ['event_handler_id']
+        );
         // data
         // Web application
         $this->insert(
