@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-xs-12 col-md-6">
-                <?= $form->field($model, 'event_id')->dropDownList(\DevGroup\EventsSystem\models\Event::dropDownList()) ?>
+                <?= $form->field($model, 'event_id')->dropDownList(\DevGroup\EventsSystem\models\Event::dropDownListWithGroup()) ?>
                 <?= $form->field($model, 'event_handler_id')->dropDownList([]) ?>
                 <?= $form->field($model, 'method')->dropDownList([]) ?>
             </div>
