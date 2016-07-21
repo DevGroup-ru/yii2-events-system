@@ -2,6 +2,11 @@
 
 namespace DevGroup\EventsSystem\assets;
 
+use DevGroup\EventsSystem\models\Event;
+use DevGroup\EventsSystem\models\EventHandler;
+use DevGroup\TagDependencyHelper\NamingHelper;
+use Yii;
+use yii\caching\TagDependency;
 use yii\web\AssetBundle;
 
 /**
@@ -28,26 +33,42 @@ class EventFormAsset extends AssetBundle
      */
     public static function register($view)
     {
-        // @todo Cache it
-        $events = \DevGroup\EventsSystem\models\Event::find()->select(['id', 'name', 'event_class_name'])->indexBy('id')->asArray(true)->all();
-        $js = 'eventsList = ' . \yii\helpers\Json::encode($events) . ";\n";
-        $eventHandlers = \DevGroup\EventsSystem\models\EventHandler::find()->asArray()->all();
-        $handlersList = [];
-        foreach ($eventHandlers as $eventHandler) {
-            $rClass = new \ReflectionClass($eventHandler['class_name']);
-            foreach ($rClass->getMethods() as $rMethod) {
-                $rParameters = $rMethod->getParameters();
-                if (isset($rParameters[0]) && $rParameters[0]->getClass() !== null) {
-                    $handlersList[] = [
-                        'id' => $eventHandler['id'],
-                        'name' => $eventHandler['name'],
-                        'methodName' => $rMethod->getName(),
-                        'eventClassName' => $rParameters[0]->getClass()->getName(),
-                    ];
+        $cacheKey = 'DevGroup/EventsSystem:eventForm:jsArrays';
+        $js = Yii::$app->cache->get($cacheKey);
+        if ($js === false) {
+            $events = Event::find()->select(['id', 'name', 'event_class_name'])->indexBy('id')->asArray(true)->all();
+            $js = 'eventsList = ' . \yii\helpers\Json::encode($events) . ";\n";
+            $eventHandlers = EventHandler::find()->asArray()->all();
+            $handlersList = [];
+            foreach ($eventHandlers as $eventHandler) {
+                $rClass = new \ReflectionClass($eventHandler['class_name']);
+                foreach ($rClass->getMethods() as $rMethod) {
+                    $rParameters = $rMethod->getParameters();
+                    if (isset($rParameters[0]) && $rParameters[0]->getClass() !== null) {
+                        $handlersList[] = [
+                            'id' => $eventHandler['id'],
+                            'name' => $eventHandler['name'],
+                            'methodName' => $rMethod->getName(),
+                            'eventClassName' => $rParameters[0]->getClass()->getName(),
+                        ];
+                    }
                 }
             }
+            $js .= 'handlersList = ' . \yii\helpers\Json::encode($handlersList) . ';';
+            Yii::$app->cache->set(
+                $cacheKey,
+                $js,
+                86400,
+                new TagDependency(
+                    [
+                        'tags' => [
+                            NamingHelper::getCommonTag(Event::className()),
+                            NamingHelper::getCommonTag(EventHandler::className()),
+                        ],
+                    ]
+                )
+            );
         }
-        $js .= 'handlersList = ' . \yii\helpers\Json::encode($handlersList) . ';';
         $view->registerJs($js, \yii\web\View::POS_BEGIN);
         parent::register($view);
     }
