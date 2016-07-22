@@ -20,6 +20,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(EventHelper::t('Create'), ['update'], ['class' => 'btn btn-success']) ?>
     </p>
+    <?=
+    \yii\bootstrap\Tabs::widget(
+        [
+            'items' => $tabs,
+        ]
+    )
+    ?>
     <?php Pjax::begin(); ?>
         <?=
         GridView::widget(
@@ -29,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id',
                     [
                         'attribute' => 'event_id',
-                        'filter' => \DevGroup\EventsSystem\models\Event::dropDownListWithGroup(),
+                        'filter' => $eventsList,
                         'value' => function ($model, $key, $index, $column) {
                             return $model->eventName;
                         }

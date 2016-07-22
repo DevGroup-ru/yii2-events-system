@@ -73,10 +73,10 @@ class EventEventHandler extends \yii\db\ActiveRecord
         ];
     }
 
-    public function search($params)
+    public function search($params, $eventIds)
     {
         $this->load($params);
-        $query = static::find();
+        $query = static::find()->where(['event_id' => $eventIds]);
         $partialAttributes = ['method'];
         foreach ($this->attributes as $key => $value) {
             if (in_array($key, $partialAttributes)) {
