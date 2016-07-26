@@ -3,6 +3,7 @@
 namespace DevGroup\EventsSystem\handlers;
 
 use Yii;
+use yii\web\Application;
 
 /**
  * Class Pagination
@@ -15,7 +16,7 @@ class Pagination
      */
     public static function updateTitle(\yii\base\ViewEvent $event)
     {
-        if (Yii::$app->request->get('page') !== null) {
+        if (Yii::$app instanceof Application === true && Yii::$app->request->get('page') !== null) {
             Yii::$app->view->title .= Yii::t(
                 'app',
                 ' - Page {page}',
