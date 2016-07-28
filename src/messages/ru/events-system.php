@@ -2,7 +2,7 @@
 
 return [
     'Event' => 'Событие',
-    'Event handler' => 'Обратобчик события',
+    'Event handler' => 'Обработчик события',
     'Event handlers' => 'Обработчики событий',
     'Method' => 'Метод',
     'Sort order' => 'Порядок',
