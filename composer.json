@@ -28,6 +28,9 @@
         }
     },
     "extra": {
-        "bootstrap": "DevGroup\\EventsSystem\\Bootstrap"
+        "bootstrap": "DevGroup\\EventsSystem\\Bootstrap",
+        "migrationPath": [
+            "src/migrations"
+        ]
     }
 }
