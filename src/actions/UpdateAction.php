@@ -4,10 +4,11 @@ namespace DevGroup\EventsSystem\actions;
 
 use DevGroup\EventsSystem\models\EventEventHandler;
 use yii\base\Action;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Class UpdateAction
- * @property \DevGroup\EventsSystem\controllers\ManageController $controller
+ * @property \DevGroup\EventsSystem\controllers\HandlersManageController $controller
  * @package DevGroup\EventsSystem\actions
  */
 class UpdateAction extends Action
@@ -26,12 +27,19 @@ class UpdateAction extends Action
         } else {
             $model = $this->controller->findModel($id);
         }
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+        $isLoaded = $model->load(\Yii::$app->request->post());
+        $hasAccess = ($model->isNewRecord && \Yii::$app->user->can('events-system-create-handler'))
+            || (!$model->isNewRecord && \Yii::$app->user->can('events-system-edit-handler'));
+        if ($isLoaded && !$hasAccess) {
+            throw new ForbiddenHttpException;
+        }
+        if ($isLoaded && $model->save()) {
             return $this->controller->redirect(['update', 'id' => $model->id]);
         } else {
             return $this->controller->render(
                 'update',
                 [
+                    'hasAccess' => $hasAccess,
                     'model' => $model,
                 ]
             );

@@ -17,16 +17,26 @@ class Module extends \yii\base\Module
             'class' => 'yii\filters\AccessControl',
             'rules' => [
                 [
+                    'actions' => ['index', 'update'],
                     'allow' => true,
-                    'roles' => ['@'],
+                    'roles' => ['events-system-view-handler'],
+                ],
+                [
+                    'actions' => ['delete'],
+                    'allow' => true,
+                    'roles' => ['events-system-delete-handler'],
+                ],
+                [
+                    'allow' => false,
+                    'roles' => ['*'],
                 ],
             ],
         ],
-        'verbs' =>[
+        'verbs' => [
             'class' => 'yii\filters\VerbFilter',
             'actions' => [
                 'delete' => ['POST'],
             ],
-        ]
+        ],
     ];
 }

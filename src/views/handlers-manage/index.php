@@ -7,7 +7,9 @@ use yii\widgets\Pjax;
 
 /**
  * @var yii\data\ActiveDataProvider $dataProvider
+ * @var array $eventsList
  * @var DevGroup\EventsSystem\models\EventEventHandler $model
+ * @var array $tabs
  * @var yii\web\View $this
  */
 
@@ -69,9 +71,11 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
         <?php Pjax::end(); ?>
     </div>
+    <?php if (Yii::$app->user->can('events-system-create-handler')) : ?>
     <div class="box-footer">
         <div class="pull-right">
             <?= Html::a(EventHelper::t('Create'), ['update'], ['class' => 'btn btn-success']) ?>
         </div>
     </div>
+    <?php endif; ?>
 </div>

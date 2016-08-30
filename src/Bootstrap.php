@@ -19,7 +19,7 @@ class Bootstrap implements \yii\base\BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $app->i18n->translations['events-system'] = [
+        $app->i18n->translations['devgroup.events-system'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en-US',
             'basePath' => '@DevGroup/EventsSystem/messages',

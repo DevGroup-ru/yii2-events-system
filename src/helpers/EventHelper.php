@@ -117,6 +117,6 @@ class EventHelper
      */
     public static function t($message, $params = [], $language = null)
     {
-        return Yii::t('events-system', $message, $params, $language);
+        return Yii::t('devgroup.events-system', $message, $params, $language);
     }
 }

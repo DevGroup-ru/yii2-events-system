@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
+ * @var boolean $hasAccess
  * @var DevGroup\EventsSystem\models\EventEventHandler $model
  * @var yii\web\View $this
  */
@@ -31,10 +32,12 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+    <?php if ($hasAccess) : ?>
     <div class="box-footer">
         <div class="form-group pull-right">
             <?= Html::submitButton($this->title, ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>
+    <?php endif; ?>
 </div>
 <?php ActiveForm::end(); ?>
