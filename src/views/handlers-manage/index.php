@@ -15,19 +15,16 @@ $this->title = EventHelper::t('Event handlers');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="event-event-handler-index">
-    <h1><?= Html::encode($this->title) ?></h1>
-    <p>
-        <?= Html::a(EventHelper::t('Create'), ['update'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?=
-    \yii\bootstrap\Tabs::widget(
-        [
-            'items' => $tabs,
-        ]
-    )
-    ?>
-    <?php Pjax::begin(); ?>
+<div class="box">
+    <div class="box-body">
+        <?=
+        \yii\bootstrap\Tabs::widget(
+            [
+                'items' => $tabs,
+            ]
+        )
+        ?>
+        <?php Pjax::begin(); ?>
         <?=
         GridView::widget(
             [
@@ -70,5 +67,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         )
         ?>
-    <?php Pjax::end(); ?>
+        <?php Pjax::end(); ?>
+    </div>
+    <div class="box-footer">
+        <div class="pull-right">
+            <?= Html::a(EventHelper::t('Create'), ['update'], ['class' => 'btn btn-success']) ?>
+        </div>
+    </div>
 </div>

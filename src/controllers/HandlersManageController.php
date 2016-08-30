@@ -9,7 +9,7 @@ use yii\web\NotFoundHttpException;
 /**
  * ManageController implements the CRUD actions for EventEventHandler model.
  */
-class ManageController extends Controller
+class HandlersManageController extends Controller
 {
     /**
      * @inheritdoc

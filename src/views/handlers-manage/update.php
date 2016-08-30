@@ -15,10 +15,9 @@ $this->params['breadcrumbs'][] = ['label' => EventHelper::t('Event handlers'), '
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="event-event-handler-update">
-    <h1><?= Html::encode($this->title) ?></h1>
-    <div class="event-event-handler-form">
-        <?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(); ?>
+<div class="box">
+    <div class="box-body">
         <div class="row">
             <div class="col-xs-12 col-md-6">
                 <?= $form->field($model, 'event_id')->dropDownList(\DevGroup\EventsSystem\models\Event::dropDownListWithGroup()) ?>
@@ -31,9 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'sort_order')->textInput() ?>
             </div>
         </div>
-        <div class="form-group">
+    </div>
+    <div class="box-footer">
+        <div class="form-group pull-right">
             <?= Html::submitButton($this->title, ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
-        <?php ActiveForm::end(); ?>
     </div>
 </div>
+<?php ActiveForm::end(); ?>
