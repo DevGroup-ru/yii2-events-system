@@ -26,7 +26,6 @@ class EventHelper
         $cacheKey = 'DevGroup/EventsSystem:activeHandlersList';
         $handlers = Yii::$app->cache->get($cacheKey);
         if ($handlers === false) {
-            $prefix = (new EventEventHandler)->prefix;
             $eventEventHandlers = EventEventHandler::find()
                 ->where(['is_active' => 1])
                 ->orderBy(['sort_order' => SORT_ASC])
@@ -58,7 +57,7 @@ class EventHelper
                     continue;
                 }
                 try {
-                    $data = Json::decode($eventEventHandler[$prefix . 'params']);
+                    $data = Json::decode($eventEventHandler['packed_json_params']);
                 } catch (\Exception $e) {
                     $data = [];
                 }

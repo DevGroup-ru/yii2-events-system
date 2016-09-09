@@ -25,9 +25,6 @@ class EventEventHandler extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            'packedJsonAttributes' => [
-                'class' => 'DevGroup\DataStructure\behaviors\PackedJsonAttributes',
-            ],
             'tagDependency' => [
                 'class' => 'DevGroup\TagDependencyHelper\CacheableActiveRecord',
             ],
@@ -52,7 +49,7 @@ class EventEventHandler extends \yii\db\ActiveRecord
             [['event_id'], 'exist', 'targetClass' => Event::className(), 'targetAttribute' => 'id'],
             [['event_handler_id'], 'exist', 'targetClass' => EventHandler::className(), 'targetAttribute' => 'id'],
             [['sort_order'], 'integer'],
-            [['params'], 'string'],
+            [['packed_json_params'], 'string'],
             [['is_active'], 'boolean'],
             [['is_system'], 'boolean', 'on' => 'search'],
             [['method'], 'string', 'max' => 255],
@@ -69,7 +66,7 @@ class EventEventHandler extends \yii\db\ActiveRecord
             'event_id' => EventHelper::t('Event'),
             'event_handler_id' => EventHelper::t('Event handler'),
             'method' => EventHelper::t('Method'),
-            'params' => EventHelper::t('Params'),
+            'packed_json_params' => EventHelper::t('Params'),
             'is_active' => EventHelper::t('Active'),
             'is_system' => EventHelper::t('System'),
             'sort_order' => EventHelper::t('Sort order'),
