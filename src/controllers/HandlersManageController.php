@@ -47,10 +47,6 @@ class HandlersManageController extends Controller
      */
     public function findModel($id)
     {
-        if (($model = EventEventHandler::getById($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
+        return EventEventHandler::loadModel($id, false, true, 86400, true);
     }
 }

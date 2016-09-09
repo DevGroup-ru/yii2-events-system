@@ -4,8 +4,7 @@ namespace DevGroup\EventsSystem\models;
 
 use DevGroup\EventsSystem\helpers\EventHelper;
 use DevGroup\EventsSystem\traits\ListData;
-use Yii;
-use yiister\mappable\ActiveRecordTrait;
+use DevGroup\TagDependencyHelper\TagDependencyTrait;
 
 /**
  * This is the model class for table "{{%devgroup_event}}".
@@ -19,8 +18,17 @@ use yiister\mappable\ActiveRecordTrait;
  */
 class Event extends \yii\db\ActiveRecord
 {
-    use ActiveRecordTrait;
+    use TagDependencyTrait;
     use ListData;
+
+    public function behaviors()
+    {
+        return [
+            'tagDependency' => [
+                'class' => 'DevGroup\TagDependencyHelper\CacheableActiveRecord',
+            ],
+        ];
+    }
 
     /**
      * @inheritdoc

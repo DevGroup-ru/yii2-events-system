@@ -3,8 +3,8 @@
 namespace DevGroup\EventsSystem\models;
 
 use DevGroup\EventsSystem\helpers\EventHelper;
+use DevGroup\TagDependencyHelper\TagDependencyTrait;
 use yii\data\ActiveDataProvider;
-use yiister\mappable\ActiveRecordTrait;
 
 /**
  * This is the model class for table "{{%devgroup_event_event_handler}}".
@@ -20,13 +20,16 @@ use yiister\mappable\ActiveRecordTrait;
  */
 class EventEventHandler extends \yii\db\ActiveRecord
 {
-    use ActiveRecordTrait;
+    use TagDependencyTrait;
 
     public function behaviors()
     {
         return [
             'packedJsonAttributes' => [
                 'class' => 'DevGroup\DataStructure\behaviors\PackedJsonAttributes',
+            ],
+            'tagDependency' => [
+                'class' => 'DevGroup\TagDependencyHelper\CacheableActiveRecord',
             ],
         ];
     }

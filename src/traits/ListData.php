@@ -41,7 +41,7 @@ trait ListData
      */
     public static function getNameById($id, $attributeName = 'name')
     {
-        $model = static::getById($id);
+        $model = static::loadModel($id);
         return empty($model[$attributeName]) === false ? $model[$attributeName] : \Yii::t('app', 'Unknown');
     }
 

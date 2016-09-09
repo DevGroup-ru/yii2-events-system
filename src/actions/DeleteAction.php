@@ -6,7 +6,7 @@ use yii\base\Action;
 
 /**
  * Class DeleteAction
- * @property \DevGroup\EventsSystem\controllers\ManageController $controller
+ * @property \DevGroup\EventsSystem\controllers\HandlersManageController $controller
  * @package DevGroup\EventsSystem\actions
  */
 class DeleteAction extends Action
