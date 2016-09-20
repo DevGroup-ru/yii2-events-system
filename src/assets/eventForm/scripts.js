@@ -1,8 +1,18 @@
+jQuery('#eventeventhandler-method').change(function () {
+    var handlerId = jQuery('#eventeventhandler-event_handler_id').val();
+    var methodName = jQuery(this).val();
+    for (var index in handlersList) {
+        if (handlersList[index]['id'] == handlerId && handlersList[index]['methodName'] == methodName) {
+            jQuery('#php-doc').val(handlersList[index]['phpDoc']);
+        }
+    }
+});
 jQuery('#eventeventhandler-event_handler_id').change(function () {
     var id = jQuery(this).val();
     var $methods = jQuery('#eventeventhandler-method').empty();
+    var eventClassName = eventsList[jQuery('#eventeventhandler-event_id').val()]['event_class_name'];
     for (var index in handlersList) {
-        if (handlersList[index]['id'] == id) {
+        if (handlersList[index]['id'] == id && handlersList[index]['eventClassName'] == eventClassName) {
             jQuery('<option>').attr('value', handlersList[index]['methodName']).text(handlersList[index]['methodName']).appendTo($methods);
         }
     }

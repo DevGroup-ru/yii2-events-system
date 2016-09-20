@@ -50,6 +50,7 @@ class EventFormAsset extends AssetBundle
                             'name' => $eventHandler['name'],
                             'methodName' => $rMethod->getName(),
                             'eventClassName' => $rParameters[0]->getClass()->getName(),
+                            'phpDoc' => $rMethod->getDocComment(),
                         ];
                     }
                 }

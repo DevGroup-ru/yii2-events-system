@@ -11,6 +11,22 @@ use yii\widgets\ActiveForm;
  */
 
 \DevGroup\EventsSystem\assets\EventFormAsset::register($this);
+if (!$model->isNewRecord) {
+    $js = <<<JS
+jQuery('#eventeventhandler-event_handler_id').find('option').each(function () {
+    if (jQuery(this).attr('value') == '{$model->event_handler_id}') {
+        jQuery(this).prop('selected', 'selected');
+        jQuery('#eventeventhandler-event_handler_id').change();
+    }
+});
+jQuery('#eventeventhandler-method').find('option').each(function () {
+    if (jQuery(this).attr('value') == '{$model->method}') {
+        jQuery(this).prop('selected', 'selected');
+    }
+});
+JS;
+    $this->registerJs($js);
+}
 $this->title = EventHelper::t($model->isNewRecord ? 'Create' : 'Update');
 $this->params['breadcrumbs'][] = ['label' => EventHelper::t('Event handlers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -24,11 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'event_id')->dropDownList(\DevGroup\EventsSystem\models\Event::dropDownListWithGroup()) ?>
                 <?= $form->field($model, 'event_handler_id')->dropDownList([]) ?>
                 <?= $form->field($model, 'method')->dropDownList([]) ?>
+                <?= $form->field($model, 'is_active')->checkbox() ?>
+                <?= $form->field($model, 'sort_order')->textInput() ?>
             </div>
             <div class="col-xs-12 col-md-6">
                 <?= $form->field($model, 'packed_json_params')->widget('devgroup\jsoneditor\Jsoneditor') ?>
-                <?= $form->field($model, 'is_active')->checkbox() ?>
-                <?= $form->field($model, 'sort_order')->textInput() ?>
+                <?= Html::textarea('phpDoc', null, ['id' => 'php-doc', 'class' => 'form-control', 'rows' => 5]) ?>
             </div>
         </div>
     </div>
