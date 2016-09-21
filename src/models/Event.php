@@ -67,11 +67,30 @@ class Event extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return array
+     */
     public static function dropDownListWithGroup()
     {
         EventGroup::preloadData();
         return static::dropDownList(function ($model, $default) {
             return $model['name'] . ' (' . EventGroup::getNameById($model['event_group_id']) . ')';
         });
+    }
+
+    /**
+     * @param null $eventGroupId
+     * @return array
+     */
+    public static function dropDownListForGroup($eventGroupId = null)
+    {
+        if ($eventGroupId === null) {
+            return static::dropDownListWithGroup();
+        }
+        return static::find()
+            ->select(['name', 'id'])
+            ->where(['event_group_id' => $eventGroupId])
+            ->indexBy('id')
+            ->column();
     }
 }

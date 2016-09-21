@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
+ * @var integer $eventGroupId
  * @var boolean $hasAccess
  * @var DevGroup\EventsSystem\models\EventEventHandler $model
  * @var yii\web\View $this
@@ -28,7 +29,7 @@ JS;
     $this->registerJs($js);
 }
 $this->title = EventHelper::t($model->isNewRecord ? 'Create' : 'Update');
-$this->params['breadcrumbs'][] = ['label' => EventHelper::t('Event handlers'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => EventHelper::t('Event handlers'), 'url' => ['index', 'eventGroupId' => $eventGroupId]];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -37,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box-body">
         <div class="row">
             <div class="col-xs-12 col-md-6">
-                <?= $form->field($model, 'event_id')->dropDownList(\DevGroup\EventsSystem\models\Event::dropDownListWithGroup()) ?>
+                <?= $form->field($model, 'event_id')->dropDownList(\DevGroup\EventsSystem\models\Event::dropDownListForGroup($eventGroupId)) ?>
                 <?= $form->field($model, 'event_handler_id')->dropDownList([]) ?>
                 <?= $form->field($model, 'method')->dropDownList([]) ?>
                 <?= $form->field($model, 'is_active')->checkbox() ?>

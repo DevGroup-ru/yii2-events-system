@@ -17,6 +17,8 @@ use yii\data\ActiveDataProvider;
  * @property boolean $is_active
  * @property boolean $is_system
  * @property integer $sort_order
+ *
+ * @property Event $event
  */
 class EventEventHandler extends \yii\db\ActiveRecord
 {
@@ -73,6 +75,11 @@ class EventEventHandler extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @param $params
+     * @param $eventIds
+     * @return ActiveDataProvider
+     */
     public function search($params, $eventIds)
     {
         $this->load($params);
@@ -108,13 +115,27 @@ class EventEventHandler extends \yii\db\ActiveRecord
         );
     }
 
+    /**
+     * @return string
+     */
     public function getEventName()
     {
         return Event::getNameById($this->event_id);
     }
 
+    /**
+     * @return string
+     */
     public function getEventHandlerName()
     {
         return EventHandler::getNameById($this->event_handler_id);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEvent()
+    {
+        return $this->hasOne(Event::className(), ['id' => 'event_id']);
     }
 }

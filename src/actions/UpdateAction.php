@@ -19,13 +19,16 @@ class UpdateAction extends Action
      * @param integer $id
      * @return mixed
      */
-    public function run($id = null)
+    public function run($id = null, $eventGroupId = null)
     {
         if ($id === null) {
             $model = new EventEventHandler;
             $model->loadDefaultValues();
         } else {
             $model = $this->controller->findModel($id);
+            if ($model->event !== null) {
+                $eventGroupId = $model->event->event_group_id;
+            }
         }
         $isLoaded = $model->load(\Yii::$app->request->post());
         $hasAccess = ($model->isNewRecord && \Yii::$app->user->can('events-system-create-handler'))
@@ -39,6 +42,7 @@ class UpdateAction extends Action
             return $this->controller->render(
                 'update',
                 [
+                    'eventGroupId' => $eventGroupId,
                     'hasAccess' => $hasAccess,
                     'model' => $model,
                 ]

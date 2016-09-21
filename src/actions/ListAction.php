@@ -48,6 +48,7 @@ class ListAction extends Action
             'index',
             [
                 'dataProvider' => $model->search(\Yii::$app->request->get(), array_keys($eventsList)),
+                'eventGroupId' => $eventGroupId,
                 'eventsList' => $eventsList,
                 'model' => $model,
                 'tabs' => $tabs,
